@@ -12,7 +12,7 @@ mvn clean install -Dpayara-embedded=true
 * Execute with `Payara Micro`
 
 ```bash
-mvn clean install -Dpayara-micro=true=true
+mvn clean install -Dpayara-micro=true
 ```
 
 ## What does this project focus?
