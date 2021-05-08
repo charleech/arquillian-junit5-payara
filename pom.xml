@@ -246,7 +246,7 @@
                 <version>${my.junit5.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.junit.jupiter</groupId>
+                <groupId>org.junit.vintage</groupId>
                 <artifactId>junit-vintage-engine</artifactId>
                 <version>${my.junit5.version}</version>
             </dependency>
