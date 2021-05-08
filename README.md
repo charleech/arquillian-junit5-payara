@@ -115,8 +115,9 @@ OS name: "windows 10", version: "10.0", arch: "amd64", family: "windows"
 Since the **JUnit5** does not have the `Test Suite` and provide the interim solution by
 the `JUnitPlatform` which requires the `junit:junit:4.13.2` in the classpath.
 
-* [Using JUnit 4 to run the JUnit Platform](https://junit.org/junit5/docs/current/user-guide/)
+* [Using JUnit 4 to run the JUnit Platform](https://junit.org/junit5/docs/current/user-guide/#running-tests-junit-platform-runner)
 * [Using JUnit 4 to run the JUnit Platform: Test Suite](https://junit.org/junit5/docs/current/user-guide/#running-tests-junit-platform-runner-test-suite)
+* [Are test suites considered deprecated in JUnit5?](https://stackoverflow.com/questions/50565724/are-test-suites-considered-deprecated-in-junit5)
 
 By using it, it causes the **Arquillian-Suite-Extension** to deploy multiple times 
 (each time for each test suite) !
@@ -160,7 +161,7 @@ mvn clean install -Dpayara-embedded=true
 [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 28.145 s - in it.test.app.github.charleech.my.cdi.MyCdiJunit5IntgrtnTestSuite
 
 #
-# The second test suite case re-deployment !
+# The second test suite causes re-deployment !
 #
 # ... Could not setup GlassFish Embedded Bootstrap
 # ... Already bootstrapped
