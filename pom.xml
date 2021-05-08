@@ -565,6 +565,10 @@
                         <groupId>org.glassfish.grizzly</groupId>
                         <artifactId>grizzly-http-server</artifactId>
                     </exclusion>
+                    <exclusion>
+                        <groupId>junit</groupId>
+                        <artifactId>junit</artifactId>
+                    </exclusion>
                 </exclusions>
             </dependency>
         </dependencies>
@@ -1217,6 +1221,191 @@
             </dependencies>
         </profile>
         <profile>
+            <id>base-arquillian-junit5-withot-testsuite</id>
+            <activation>
+                <file>
+                    <exists>src/test/resources/junit5-without-testsuite.txt</exists>
+                </file>
+            </activation>
+            <properties>
+                <my.maven.surefire.version>3.0.0-M5</my.maven.surefire.version>
+                <my.maven.failsafe.version>3.0.0-M5</my.maven.failsafe.version>
+            </properties>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-surefire-plugin</artifactId>
+                            <version>${my.maven.surefire.version}</version>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.junit.jupiter</groupId>
+                                    <artifactId>junit-jupiter-engine</artifactId>
+                                    <version>${my.junit5.version}</version>
+                                </dependency>
+                            </dependencies>
+                            <executions>
+                                <execution>
+                                    <id>unit-test</id>
+                                    <goals>
+                                        <goal>test</goal>
+                                    </goals>
+                                    <configuration>
+                                        <encoding>${project.build.sourceEncoding}</encoding>
+                                        <skipTests>${my.skipUTs}</skipTests>
+                                        <includes>
+                                            <include>
+                                                **/*Tester*.java
+                                            </include>
+                                        </includes>
+                                        <excludes>
+                                            <exclude>
+                                                **/*IntgrtnTest*.java
+                                            </exclude>
+                                        </excludes>
+                                        <excludedGroups>
+                                            ${my.integration.test.category}
+                                        </excludedGroups>
+                                        <additionalClasspathElements>
+                                            <additionalClasspathElement>
+                                                ${basedir}/src/test/java
+                                            </additionalClasspathElement>
+                                        </additionalClasspathElements>
+                                        <argLine>${my.maven.surefire.jvm.memory} ${my.maven.surefire.java.endorsed.dir}</argLine>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-failsafe-plugin</artifactId>
+                            <version>${my.maven.failsafe.version}</version>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.junit.jupiter</groupId>
+                                    <artifactId>junit-jupiter-engine</artifactId>
+                                    <version>${my.junit5.version}</version>
+                                </dependency>
+                            </dependencies>
+                            <executions>
+                                <execution>
+                                    <id>integration-test</id>
+                                    <goals>
+                                        <goal>integration-test</goal>
+                                        <goal>verify</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                            <configuration>
+                                <encoding>${project.build.sourceEncoding}</encoding>
+                                <skipTests>${my.skipTests}</skipTests>
+                                <skipITs>${my.skipITs}</skipITs>
+                                <includes>
+                                    <include>
+                                        **/*IntgrtnTest*.java
+                                    </include>
+                                </includes>
+                                <groups>
+                                    ${my.integration.test.category}
+                                </groups>
+                                <additionalClasspathElements>
+                                    <additionalClasspathElement>
+                                        ${basedir}/src/test/java
+                                    </additionalClasspathElement>
+                                </additionalClasspathElements>
+                                <argLine>${my.maven.surefire.jvm.memory} ${my.maven.surefire.java.endorsed.dir}</argLine>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>org.junit.jupiter</groupId>
+                    <artifactId>junit-jupiter-api</artifactId>
+                    <scope>${my.project.dependency.test.scope}</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.junit.jupiter</groupId>
+                    <artifactId>junit-jupiter-engine</artifactId>
+                    <scope>${my.project.dependency.test.scope}</scope>
+                </dependency>
+                <!--dependency>
+                    <groupId>org.junit.platform</groupId>
+                    <artifactId>junit-platform-runner</artifactId>
+                    <scope>${my.project.dependency.test.scope}</scope>
+                </dependency-->
+                <!--dependency>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                    <scope>${my.project.dependency.test.scope}</scope>
+                </dependency-->
+                <dependency>
+                    <groupId>org.mockito</groupId>
+                    <artifactId>mockito-core</artifactId>
+                    <scope>${my.project.dependency.test.scope}</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.mockito</groupId>
+                    <artifactId>mockito-junit-jupiter</artifactId>
+                    <scope>${my.project.dependency.test.scope}</scope>
+                </dependency>
+                <dependency>
+                    <groupId>com.github.stefanbirkner</groupId>
+                    <artifactId>system-rules</artifactId>
+                    <scope>${my.project.dependency.test.scope}</scope>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>junit</groupId>
+                            <artifactId>junit-dep</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+                <dependency>
+                    <groupId>com.github.stefanbirkner</groupId>
+                    <artifactId>system-lambda</artifactId>
+                    <scope>${my.project.dependency.test.scope}</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.jboss.shrinkwrap.resolver</groupId>
+                    <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
+                    <scope>${my.project.dependency.test.scope}</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.jboss.shrinkwrap.descriptors</groupId>
+                    <artifactId>shrinkwrap-descriptors-impl-javaee</artifactId>
+                    <scope>${my.project.dependency.test.scope}</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.jboss.arquillian.junit5</groupId>
+                    <artifactId>arquillian-junit5-container</artifactId>
+                    <scope>${my.project.dependency.test.scope}</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.eu.ingwar.tools</groupId>
+                    <artifactId>arquillian-suite-extension</artifactId>
+                    <scope>${my.project.dependency.test.scope}</scope>
+                </dependency>
+                <!-- arquillian-suite-extension requires this -->
+                <dependency>
+                    <groupId>commons-lang</groupId>
+                    <artifactId>commons-lang</artifactId>
+                    <scope>${my.project.dependency.test.scope}</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
             <id>payara-embedded</id>
             <activation>
                 <property>
@@ -1425,5 +1614,7 @@
     <modules>
     	<module>my-cdi-junit4</module>
         <module>my-cdi-junit5</module>
+        <module>my-cdi-junit5-multiple-tester</module>
+        <module>my-cdi-junit5-multiple-testsuite</module>
     </modules>
 </project>
