@@ -252,6 +252,11 @@
             </dependency>
             <dependency>
                 <groupId>org.junit.platform</groupId>
+                <artifactId>junit-platform-suite</artifactId>
+                <version>${my.junit5.platform.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.platform</groupId>
                 <artifactId>junit-platform-runner</artifactId>
                 <version>${my.junit5.platform.version}</version>
             </dependency>
@@ -1156,16 +1161,21 @@
                     <artifactId>junit-jupiter-engine</artifactId>
                     <scope>${my.project.dependency.test.scope}</scope>
                 </dependency>
-                <dependency>
+	            <dependency>
+	                <groupId>org.junit.platform</groupId>
+	                <artifactId>junit-platform-suite</artifactId>
+                    <scope>${my.project.dependency.test.scope}</scope>
+	            </dependency>
+                <!--dependency>
                     <groupId>org.junit.platform</groupId>
                     <artifactId>junit-platform-runner</artifactId>
                     <scope>${my.project.dependency.test.scope}</scope>
-                </dependency>
-                <dependency>
+                </dependency-->
+                <!--dependency>
                     <groupId>junit</groupId>
                     <artifactId>junit</artifactId>
                     <scope>${my.project.dependency.test.scope}</scope>
-                </dependency>
+                </dependency-->
                 <dependency>
                     <groupId>org.mockito</groupId>
                     <artifactId>mockito-core</artifactId>
