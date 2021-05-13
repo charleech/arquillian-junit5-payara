@@ -30,7 +30,7 @@
         <my.project.dependency.import.scope>import</my.project.dependency.import.scope>
         <my.project.dependency.web.scope>compile</my.project.dependency.web.scope>
         
-        <my.maven.surefire.jvm.memory>-Xmx512m -XX:MaxPermSize=256m -XX:-UseSplitVerifier</my.maven.surefire.jvm.memory>
+        <my.maven.surefire.jvm.memory>-Xmx512m -XX:MaxPermSize=256m</my.maven.surefire.jvm.memory>
         <my.maven.surefire.java.endorsed.dir/>
         
         <my.project.quality.exclude/>
