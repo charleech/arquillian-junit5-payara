@@ -500,6 +500,11 @@
                 <version>${my.payara.arquillian.version}</version>
             </dependency>
             <dependency>
+                <groupId>fish.payara.arquillian</groupId>
+                <artifactId>arquillian-payara-server-managed</artifactId>
+                <version>${my.payara.arquillian.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>fish.payara.extras</groupId>
                 <artifactId>payara-micro</artifactId>
                 <version>${my.payara.version}</version>
@@ -1449,6 +1454,66 @@
 		            <artifactId>arquillian-payara-server-embedded</artifactId>
 		            <scope>${my.project.dependency.test.scope}</scope>
 		        </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>payara-managed</id>
+            <activation>
+                <property>
+                    <name>payara-managed</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <properties>
+                <my.payara.location>${project.build.directory}</my.payara.location>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-payara-managed</id>
+                                <phase>process-test-classes</phase>
+                                <goals>
+                                    <goal>unpack</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>fish.payara.distributions</groupId>
+                                            <artifactId>payara</artifactId>
+                                            <version>${my.payara.version}</version>
+                                            <type>zip</type>
+                                            <overWrite>false</overWrite>
+                                            <outputDirectory>${my.payara.location}</outputDirectory>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <inherited>true</inherited>
+                        <configuration>
+                            <argLine>${my.maven.surefire.jvm.memory} ${my.maven.surefire.java.endorsed.dir}</argLine>
+                            <systemPropertyVariables>
+                                <arquillian.launch>payara-managed</arquillian.launch>
+                                <payara.home>${project.build.directory}/payara5</payara.home>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            <dependencies>  
+                <dependency>
+                    <groupId>fish.payara.arquillian</groupId>
+                    <artifactId>arquillian-payara-server-managed</artifactId>
+                    <scope>${my.project.dependency.test.scope}</scope>
+                </dependency>
             </dependencies>
         </profile>
         <profile>
