@@ -12,9 +12,23 @@
             <property name="bindHttpsPort">14081</property>
         </configuration>
         <protocol type="Servlet 3.0">
-            <!--property name="host">local.summitthai.com</property-->
+            <!--property name="host">some.domain.com</property>
             <property name="scheme">https</property>
-            <property name="port">14081</property>
+            <property name="port">14081</property-->
+        </protocol>
+    </container>
+
+    <container qualifier="payara-managed">
+        <configuration>
+            <property name="adminPort">4848</property>
+            <property name="adminPassword">adminadmin</property>
+            <property name="bindHttpPort">14080</property>
+            <property name="bindHttpsPort">14081</property>
+        </configuration>
+        <protocol type="Servlet 3.0">
+            <!--property name="host">some.domain.com</property>
+            <property name="scheme">https</property>
+            <property name="port">8181</property-->
         </protocol>
     </container>
 
